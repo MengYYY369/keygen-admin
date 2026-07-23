@@ -1,11 +1,11 @@
 <%- include("partials/header") %>
 <div class="pt-8 bg-gray-100 rounded-xl text-gray-800">
     <div id="breadcrumbs" class="-mt-2 flex gap-1 items-center text-xs px-8">
-        <a href="/" class="text-gray-600">Keygen Admin</a>
+        <a href="/" class="text-gray-600">Keygen 管理后台</a>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
-        <a class="text-gray-600" href="/products">Products</a>
+        <a class="text-gray-600" href="/products">产品</a>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
@@ -24,37 +24,37 @@
     <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 rounded-b-xl">
         <table>
             <tr>
-                <td class="text-sm align-middle">PRODUCT ID</td>
+                <td class="text-sm align-middle">产品 ID</td>
                 <td class="full mono"><%= product.id %></td>
             </tr>
             <tr>
-                <td class="text-sm align-middle">ACCOUNT ID</td>
+                <td class="text-sm align-middle">账户 ID</td>
                 <td class="full mono"><%= process.env.KEYGEN_ACCOUNT_ID %></td>
             </tr>
             <tr>
-                <td class="text-sm align-middle">CREATED</td>
+                <td class="text-sm align-middle">创建时间</td>
                 <td class="full mono"><%= product.attributes.created %></td>
             </tr>
         </table>
     </div>
 
     <div class="subheader border-t border-t-gray-200 flex w-full justify-between">
-        <div>POLICIES</div>
+        <div>策略</div>
         <a href="/product/<%= product.id %>/policies/create" class="flex gap-1 items-center no-underline">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
 
-            ADD POLICY</a>
+            添加策略</a>
     </div>
 
     <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 rounded-b-xl">
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Options</th>
-                    <th>Created</th>
+                    <th>名称</th>
+                    <th>选项</th>
+                    <th>创建时间</th>
                 </tr>
             </thead>
 
@@ -76,32 +76,32 @@
             <% } %>
             <% if (policies.length === 0) { %>
             <tr>
-                <td colspan="4">No policies found</td>
+                <td colspan="4">未找到策略</td>
             </tr>
             <% } %>
         </table>
     </div>
 
     <div class="subheader border-t border-t-gray-200 flex w-full justify-between">
-        <div>LICENSE</div>
+        <div>许可证</div>
         <a href="/product/<%= product.id %>/licenses/create" class="flex gap-1 items-center no-underline">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
 
-            ADD LICENSE</a>
+            添加许可证</a>
     </div>
 
     <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 rounded-b-xl pb-4">
         <table>
             <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Key</th>
+                    <th>邮箱</th>
+                    <th>密钥</th>
                     <th>ID</th>
-                    <th>Status</th>
-                    <th>Validated</th>
-                    <th>Created</th>
+                    <th>状态</th>
+                    <th>验证时间</th>
+                    <th>创建时间</th>
                 </tr>
             </thead>
 
@@ -117,7 +117,7 @@
                 <td><%= license.attributes.status %></td>
                 <td>
                     <% if (license.attributes.lastValidated === null) { %>
-                    never
+                    从未
                     <% } else { %>
                     <%= license.attributes.lastValidated.split("T")[0] %>
                     <% } %>
@@ -129,7 +129,7 @@
             <% } %>
             <% if (licenses.length === 0) { %>
             <tr>
-                <td colspan="6">No licenses found</td>
+                <td colspan="6">未找到许可证</td>
             </tr>
             <% } %>
         </table>

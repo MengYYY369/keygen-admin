@@ -19,6 +19,6 @@ export async function handle_create(req, res) {
         const policy = await keygen.createPolicy(api_key, product.id, attributes);
         return res.redirect(`/product/${product.id}`);
     } catch (e) {
-        return res.render('create_policy', { error: "Invalid JSON data", data, product });
+        return res.render('create_policy', { error: "JSON 数据无效", data, product });
     }
 }

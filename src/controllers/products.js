@@ -10,7 +10,7 @@ export async function index(req, res) {
 export async function handle_create(req, res) {
     const { name } = req.body;
     if (!name || name.trim().length === 0) {
-        return res.render('create_product', { error: "Name is required" });
+        return res.render('create_product', { error: "名称为必填项" });
     }
 
     const api_key = await getAPIKey();

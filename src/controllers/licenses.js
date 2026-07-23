@@ -30,7 +30,7 @@ export async function handle_delete(req, res) {
     const api_key = await getAPIKey();
     const license = await keygen.getLicense(api_key, license_id);
     if (!license) {
-        return res.status(404).send('License not found');
+        return res.status(404).send('未找到许可证');
     }
 
     await keygen.deleteLicense(api_key, license.id);
