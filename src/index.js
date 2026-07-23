@@ -1,3 +1,6 @@
+process.on("unhandledRejection", (err) => { console.error("unhandledRejection", err); });
+process.on("uncaughtException", (err) => { console.error("uncaughtException", err); });
+
 import dotenv from "dotenv-extended";
 dotenv.load({
     silent: true,
@@ -37,6 +40,7 @@ hummingbird.get("/products", controllers.products.index);
 hummingbird.get("/products/create", "create_product");
 hummingbird.post("/products/create", controllers.products.handle_create);
 hummingbird.get("/product/:product_id", controllers.products.show);
+hummingbird.get("/policy/:policy_id", controllers.policies.show);
 hummingbird.get("/product/:product_id/policies/create", controllers.policies.create);
 hummingbird.post("/product/:product_id/policies/create", controllers.policies.handle_create);
 hummingbird.get("/product/:product_id/licenses/create", controllers.licenses.create);

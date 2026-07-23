@@ -1,0 +1,42 @@
+<%- include("partials/header") %>
+<div class="pt-8 bg-gray-100 rounded-xl text-gray-800">
+    <div id="breadcrumbs" class="-mt-2 flex gap-1 items-center text-xs px-8">
+        <a href="/" class="text-gray-600">Keygen 管理后台</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+        <a href="/products" class="text-gray-600">产品</a>
+        <% if (policy.relationships && policy.relationships.product && policy.relationships.product.data) { %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+        <a class="text-gray-600" href="/product/<%= policy.relationships.product.data.id %>">产品详情</a>
+        <% } %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+        <a class="text-gray-700 font-medium" href="/policy/<%= policy.id %>"><%= policy.attributes.name %></a>
+    </div>
+    <h1 class="text-3xl my-4 px-8 flex gap-2 items-center">策略</h1>
+    <div class="flex flex-col gap-4 bg-gray-50 border-t py-1 border-t-gray-200 rounded-b-xl pb-4">
+        <table>
+            <tr><td>策略 ID</td><td class="full mono"><%= policy.id %></td></tr>
+            <tr><td>名称</td><td class="full mono"><%= policy.attributes.name %></td></tr>
+            <tr><td>产品 ID</td><td class="full mono"><% if (policy.relationships && policy.relationships.product && policy.relationships.product.data) { %><a href="/product/<%= policy.relationships.product.data.id %>"><%= policy.relationships.product.data.id %></a><% } else { %>-<% } %></td></tr>
+            <tr><td>有效期（秒）</td><td class="full mono"><%= policy.attributes.duration || "永久 (-1)" %></td></tr>
+            <tr><td>严格模式</td><td class="full mono"><%= policy.attributes.strict %></td></tr>
+            <tr><td>浮动授权</td><td class="full mono"><%= policy.attributes.floating %></td></tr>
+            <tr><td>最大机器数</td><td class="full mono"><%= policy.attributes.maxMachines || "不限" %></td></tr>
+            <tr><td>唯一性策略</td><td class="full mono"><%= policy.attributes.machineUniquenessStrategy %></td></tr>
+            <tr><td>匹配策略</td><td class="full mono"><%= policy.attributes.machineMatchingStrategy %></td></tr>
+            <tr><td>创建时间</td><td class="full mono"><%= policy.attributes.created %></td></tr>
+        </table>
+    </div>
+    <% if (policy.relationships && policy.relationships.product && policy.relationships.product.data) { %>
+    <div class="flex justify-end gap-2 p-4">
+        <a href="/product/<%= policy.relationships.product.data.id %>/licenses/create" class="font-bold p-2">创建许可证</a>
+        <a href="/product/<%= policy.relationships.product.data.id %>" class="text-gray-600 p-2">返回产品</a>
+    </div>
+    <% } %>
+</div>
+<%- include("partials/footer") %>
