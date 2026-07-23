@@ -16,6 +16,8 @@ if (!process.env.SECRET) {
 
 import path from "path";
 import { fileURLToPath } from "url";
+// force NFT to include view engine (express loads it dynamically)
+import "ejs";
 import Hummingbird from "@themaximalist/hummingbird.js";
 import * as controllers from "./controllers/index.js";
 import * as middleware from "./middleware.js";
@@ -23,7 +25,11 @@ import * as middleware from "./middleware.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hummingbird = new Hummingbird();
-hummingbird.app.set("views", path.join(__dirname, "../views"));
+// views live next to api/ on Vercel; fall back to repo-relative
+const viewsDir = process.env.VERCEL
+    ? path.join(process.cwd(), "views")
+    : path.join(__dirname, "../views");
+hummingbird.app.set("views", viewsDir);
 hummingbird.app.use(middleware.authorize);
 
 hummingbird.get("/", "index");
