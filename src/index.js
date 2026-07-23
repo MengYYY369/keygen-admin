@@ -1,11 +1,29 @@
 import dotenv from "dotenv-extended";
-dotenv.load();
+dotenv.load({
+    silent: true,
+    errorOnMissing: false,
+    errorOnExtra: false,
+    includeProcessEnv: true,
+});
 
-import Hummingbird from "@themaximalist/hummingbird.js"
+// ponytail: Vercel /tmp is ephemeral but fine — auth is Basic, session only for flash
+if (process.env.VERCEL && !process.env.SESSIONS_DIR) {
+    process.env.SESSIONS_DIR = "/tmp/sessions";
+}
+if (!process.env.SECRET) {
+    process.env.SECRET = "keygen-admin-dev-secret";
+}
+
+import path from "path";
+import { fileURLToPath } from "url";
+import Hummingbird from "@themaximalist/hummingbird.js";
 import * as controllers from "./controllers/index.js";
 import * as middleware from "./middleware.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const hummingbird = new Hummingbird();
+hummingbird.app.set("views", path.join(__dirname, "../views"));
 hummingbird.app.use(middleware.authorize);
 
 hummingbird.get("/", "index");
@@ -22,4 +40,9 @@ hummingbird.get("/license/:license_id/delete", controllers.licenses.handle_delet
 
 hummingbird.app.post("/webhooks/paddle", controllers.paddle.handle_webhook);
 
-await hummingbird.start();
+// Vercel: export app; local: listen
+if (!process.env.VERCEL) {
+    await hummingbird.start();
+}
+
+export default hummingbird.app;

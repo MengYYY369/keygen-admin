@@ -3,10 +3,10 @@ import keygen from "../keygen.js";
 import getAPIKey from "../api_key.js";
 import { sendLicenseEmail } from "../mail.js";
 
+// ponytail: don't exit process on Vercel cold start — webhook just fails until env is set
 const mapping = JSON.parse(process.env.PRODUCT_POLICY_MAPPING || "{}");
 if (Object.keys(mapping).length === 0) {
-    console.log("Expected PRODUCT_POLICY_MAPPING to be set")
-    process.exit(1);
+    console.log("Expected PRODUCT_POLICY_MAPPING to be set (webhook will fail until configured)");
 }
 
 if (process.env.NODE_ENV !== 'production') {

@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build:css",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/src/index.js" }
+  ]
+}
